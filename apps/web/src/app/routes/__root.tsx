@@ -14,7 +14,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 })
 
 function RootLayout() {
-  console.log(import.meta.env.DEV)
   return (
     <>
       <Outlet />
