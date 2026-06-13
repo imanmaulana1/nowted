@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('../../shared/assets/fonts/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.woff2')
+    format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('../../shared/assets/fonts/Plus_Jakarta_Sans/PlusJakartaSans-Italic-VariableFont_wght.woff2')
+    format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../shared/assets/fonts/JetBrains_Mono/JetBrainsMono-VariableFont_wght.woff2')
+    format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../shared/assets/fonts/JetBrains_Mono/JetBrainsMono-Italic-VariableFont_wght.woff2')
+    format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+
+@font-face {
+  font-family: 'Kaushan Script';
+  src: url('../../shared/assets/fonts/Kaushan_Script/KaushanScript-Regular.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
