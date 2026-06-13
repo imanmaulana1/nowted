@@ -11,6 +11,7 @@ const envSchema = z.object({
   REFRESH_TOKEN_SECRET: z.string(),
   JWT_ISSUER: z.string(),
   JWT_AUDIENCE: z.string(),
+  CLOUDINARY_URL: z.string().startsWith('cloudinary://'),
 });
 
 const parsed = envSchema.safeParse(process.env);
