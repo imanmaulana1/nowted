@@ -4,3 +4,4 @@ dist
 build
 coverage
 pnpm-lock.yaml
+src/app/route-tree.gen.ts

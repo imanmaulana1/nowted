@@ -1,7 +1,13 @@
+import { QueryProvider } from './query-provider'
+
 type AppProviderProps = {
   children: React.ReactNode
 }
 
 export function AppProvider({ children }: AppProviderProps) {
-  return <>{children}</>
+  return (
+    <>
+      <QueryProvider>{children}</QueryProvider>
+    </>
+  )
 }
