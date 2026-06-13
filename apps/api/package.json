@@ -1,0 +1,73 @@
+{
+  "name": "nowted-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/server.ts",
+  "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "lint": "eslint ./src --max-warnings=0",
+    "lint:fix": "eslint ./src --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepare": "npm run typecheck && npm run lint"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "rest-api",
+    "typescript",
+    "api",
+    "backend",
+    "nowted"
+  ],
+  "author": "Iman Maulana",
+  "license": "ISC",
+  "type": "module",
+  "imports": {
+    "#/*": "./dist/*"
+  },
+  "bugs": {
+    "url": "https://github.com/imanmaulana1/nowted/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imanmaulana1/nowted.git",
+    "directory": "apps/api"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "jose": "^6.2.3",
+    "morgan": "^1.11.0",
+    "nanoid": "^5.1.11",
+    "slugify": "^1.6.9",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/compression": "^1.8.1",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.13.2",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.4",
+    "tsx": "^4.22.4",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.61.0"
+  }
+}
