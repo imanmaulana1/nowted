@@ -1,12 +1,12 @@
 import { getEnv } from '#/config/env.js';
 import { errorHandler, notFoundHandler } from '#/shared/middlewares/index.js';
+import { rootRouter, v1Router } from '#/shared/routes/index.js';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-
 
 export function createApp() {
   const app = express();
@@ -24,8 +24,11 @@ export function createApp() {
   app.use(compression());
   app.use(morgan(getEnv.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
+  app.use('/', rootRouter);
+  app.use('/api/v1', v1Router);
 
-  app.use(notFoundHandler)
-  app.use(errorHandler)
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+
   return app;
 }
