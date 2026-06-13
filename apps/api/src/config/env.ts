@@ -12,6 +12,7 @@ const envSchema = z.object({
   JWT_ISSUER: z.string(),
   JWT_AUDIENCE: z.string(),
   CLOUDINARY_URL: z.string().startsWith('cloudinary://'),
+  DATABASE_URL: z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);

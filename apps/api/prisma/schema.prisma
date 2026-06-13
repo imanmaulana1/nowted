@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  fullName  String
+  email     String   @unique
+  password  String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions Session[]
+  folders  Folder[]
+  notes    Note[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userAgent String?
+  ipAddress String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Folder {
+  id        String   @id @default(uuid())
+  slug      String
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  notes     Note[]
+
+  @@unique([userId, slug])
+  @@unique([userId, name])
+  @@index([userId, createdAt])
+}
+
+model Note {
+  id         String    @id @default(uuid())
+  title      String    @default("Untitled")
+  content    Json
+  slug       String
+  plainText  String    @default("")
+  excerpt    String    @default("")
+  isFavorite Boolean   @default(false)
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  folderId   String?
+  folder     Folder?   @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  favoriteAt DateTime?
+  archivedAt DateTime?
+  trashedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([userId, slug])
+  @@index([userId, updatedAt])
+  @@index([userId, archivedAt, updatedAt])
+  @@index([userId, trashedAt, updatedAt])
+  @@index([userId, isFavorite, updatedAt])
+  @@index([userId, folderId, updatedAt])
+}

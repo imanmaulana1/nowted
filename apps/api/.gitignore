@@ -5,6 +5,5 @@ coverage
 .env.*
 .zed
 
-prisma/migrations/
 src/generated/prisma
 uploads/
