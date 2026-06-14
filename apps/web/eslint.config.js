@@ -7,6 +7,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig([
   globalIgnores(['dist', 'src/app/route-tree.gen.ts']),
@@ -22,6 +26,9 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+      },
     },
     rules: {
       'react-refresh/only-export-components': [

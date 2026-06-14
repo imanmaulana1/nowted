@@ -1,5 +1,6 @@
 import { Toaster } from '@/shared/components/ui/sonner'
 import { TooltipProvider } from '@/shared/components/ui/tooltip'
+
 import { QueryProvider } from './query-provider'
 import { ThemeProvider } from './theme-provider'
 
