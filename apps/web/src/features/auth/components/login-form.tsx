@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { toast } from 'sonner'
+import { useNavigate } from '@tanstack/react-router'
 
 import { Button } from '@/shared/components/ui/button'
 import {
@@ -12,9 +12,14 @@ import { Input } from '@/shared/components/ui/input'
 import { InputPassword } from '@/shared/components/ui/input-password'
 import { Spinner } from '@/shared/components/ui/spinner'
 
+import { useLogin } from '../hooks/use-login'
 import { loginSchema, type LoginInput } from '../schemas/login.schema'
 
 export function LoginForm() {
+  const { mutate, isPending } = useLogin()
+
+  const navigate = useNavigate()
+
   const form = useForm({
     defaultValues: {
       email: '',
@@ -24,12 +29,12 @@ export function LoginForm() {
       onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      form.reset()
-      toast.success(`Welcome back! 👋`, {
-        description: 'Ready to pick up where you left off',
+      mutate(value, {
+        onSuccess: () => {
+          form.reset()
+          navigate({ to: '/app' })
+        },
       })
-      console.log(value)
     },
   })
 
@@ -102,15 +107,19 @@ export function LoginForm() {
       <div className='mt-6'>
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <Button
-              type='submit'
-              disabled={!canSubmit || isSubmitting}
-              className='w-full'>
-              {isSubmitting && <Spinner />}
-              {isSubmitting ? 'Signing in...' : 'Sign in'}
-            </Button>
-          )}
+          children={([canSubmit, isSubmitting]) => {
+            const isLoading = isSubmitting || isPending
+
+            return (
+              <Button
+                type='submit'
+                disabled={!canSubmit || isLoading}
+                className='w-full'>
+                {isLoading && <Spinner />}
+                {isLoading ? 'Signing in...' : 'Sign in'}
+              </Button>
+            )
+          }}
         />
       </div>
     </form>

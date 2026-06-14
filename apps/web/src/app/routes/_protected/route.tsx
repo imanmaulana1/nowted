@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_protected')({
   beforeLoad: async ({ location }) => {
@@ -10,5 +10,5 @@ export const Route = createFileRoute('/_protected')({
 })
 
 function ProtectedLayout() {
-  return <div>Hello "/_protected"!</div>
+  return <Outlet />
 }
