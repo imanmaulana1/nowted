@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { toast } from 'sonner'
+import { useNavigate } from '@tanstack/react-router'
 
 import { Button } from '@/shared/components/ui/button'
 import {
@@ -12,9 +12,14 @@ import { Input } from '@/shared/components/ui/input'
 import { InputPassword } from '@/shared/components/ui/input-password'
 import { Spinner } from '@/shared/components/ui/spinner'
 
+import { useRegister } from '../hooks/use-register'
 import { registerSchema, type RegisterInput } from '../schemas/register.schema'
 
 export function RegisterForm() {
+  const { mutate, isPending } = useRegister()
+
+  const navigate = useNavigate()
+
   const form = useForm({
     defaultValues: {
       email: '',
@@ -25,12 +30,12 @@ export function RegisterForm() {
       onSubmit: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      form.reset()
-      toast.success('Account created successfully', {
-        description: 'Please sign in to continue',
+      mutate(value, {
+        onSuccess: () => {
+          form.reset()
+          navigate({ to: '/login' })
+        },
       })
-      console.log(value)
     },
   })
 
@@ -136,15 +141,19 @@ export function RegisterForm() {
       <div className='mt-6'>
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => (
-            <Button
-              type='submit'
-              disabled={!canSubmit || isSubmitting}
-              className='w-full'>
-              {isSubmitting && <Spinner />}
-              {isSubmitting ? 'Signing up...' : 'Sign up'}
-            </Button>
-          )}
+          children={([canSubmit, isSubmitting]) => {
+            const isLoading = isSubmitting || isPending
+
+            return (
+              <Button
+                type='submit'
+                disabled={!canSubmit || isLoading}
+                className='w-full'>
+                {isLoading && <Spinner />}
+                {isLoading ? 'Signing up...' : 'Sign up'}
+              </Button>
+            )
+          }}
         />
       </div>
     </form>
