@@ -24,3 +24,31 @@ export const existsByEmail = (email: string) => {
     },
   });
 };
+
+export const createSession = (data: Prisma.SessionUncheckedCreateInput) => {
+  return prisma.session.create({
+    data,
+  });
+};
+
+export const findAuthUserByEmail = (email: string) => {
+  return prisma.user.findUnique({
+    where: {
+      email,
+    },
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      password: true,
+      avatarUrl: true,
+      createdAt: true,
+      _count: {
+        select: {
+          folders: true,
+          notes: true,
+        },
+      },
+    },
+  });
+};
