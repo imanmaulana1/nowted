@@ -1,6 +1,6 @@
 import { getEnv } from '#/config/env.js';
-import { errorResponseSchema } from '#/shared/schemas/response.schema.js';
-import { z } from 'zod';
+import type { errorResponseSchema } from '#/shared/schemas/response.schema.js';
+import type { z } from 'zod';
 
 export interface SuccessParams<T> {
   message?: string;
