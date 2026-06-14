@@ -8,7 +8,11 @@ import type { LoginBody } from './schemas/login.schema.js';
 import type { RegisterResponse } from './schemas/register-response.schema.js';
 import type { RegisterBody } from './schemas/register.schema.js';
 import { hashPassword, verifyPassword } from './utils/password.helper.js';
-import { generateRefreshToken, signAccessToken } from './utils/token.helper.js';
+import {
+  generateRefreshToken,
+  hashRefreshToken,
+  signAccessToken,
+} from './utils/token.helper.js';
 
 export const register = async (
   payload: RegisterBody
@@ -73,4 +77,11 @@ export const login = async (
     accessToken,
     refreshToken: refreshToken.plain,
   };
+};
+
+export const logout = async (refreshToken: string) => {
+  if (!refreshToken) return;
+
+  const refreshTokenHash = hashRefreshToken(refreshToken);
+  await authRepository.deleteSessionByTokenHash(refreshTokenHash);
 };

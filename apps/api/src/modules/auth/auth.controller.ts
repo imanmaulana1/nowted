@@ -47,3 +47,13 @@ export const login = async (req: Request, res: Response) => {
     })
   );
 };
+
+export const logout = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken as string;
+
+  await authService.logout(refreshToken);
+
+  res.clearCookie(REFRESH_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_OPTIONS);
+
+  res.sendStatus(204);
+};

@@ -52,3 +52,11 @@ export const findAuthUserByEmail = (email: string) => {
     },
   });
 };
+
+export const deleteSessionByTokenHash = (tokenHash: string) => {
+  return prisma.session.deleteMany({
+    where: {
+      tokenHash,
+    },
+  });
+};
