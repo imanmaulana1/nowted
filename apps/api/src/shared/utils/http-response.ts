@@ -1,6 +1,7 @@
+import type { z } from 'zod';
+
 import { getEnv } from '#/config/env.js';
 import type { errorResponseSchema } from '#/shared/schemas/response.schema.js';
-import type { z } from 'zod';
 
 export interface SuccessParams<T> {
   message?: string;

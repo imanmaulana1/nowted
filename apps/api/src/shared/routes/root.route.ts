@@ -1,6 +1,7 @@
+import { Router } from 'express';
+
 import { getEnv } from '#/config/env.js';
 import { successResponse } from '#/shared/utils/http-response.js';
-import { Router } from 'express';
 
 export const rootRouter = Router();
 

@@ -3,9 +3,11 @@ import { Router } from 'express';
 import { requireAuth, validateRequest } from '#/shared/middlewares/index.js';
 
 import * as authController from './auth.controller.js';
-import { loginSchema } from './schemas/login.schema.js';
-import { registerSchema } from './schemas/register.schema.js';
-import { changePasswordSchema } from './schemas/change-password.schema.js';
+import {
+  changePasswordSchema,
+  loginSchema,
+  registerSchema,
+} from './schemas/index.js';
 
 export const authRouter = Router();
 

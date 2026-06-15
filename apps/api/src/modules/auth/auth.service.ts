@@ -6,9 +6,11 @@ import {
 
 import * as authRepository from './auth.repository.js';
 import { REFRESH_TOKEN_MAX_AGE_MS } from './constants/auth.cookie.js';
-import type { ChangePasswordBody } from './schemas/change-password.schema.js';
-import type { LoginBody } from './schemas/login.schema.js';
-import type { RegisterBody } from './schemas/register.schema.js';
+import type {
+  ChangePasswordBody,
+  LoginBody,
+  RegisterBody,
+} from './schemas/index.js';
 import { hashPassword, verifyPassword } from './utils/password.helper.js';
 import {
   generateRefreshToken,

@@ -1,9 +1,10 @@
-import { AppError } from '#/shared/errors/app.error.js';
+import { JOSEError, JWTExpired } from 'jose/errors';
+import { ZodError } from 'zod';
+
+import { AppError } from '#/shared/errors/index.js';
 import { formatZodError } from '#/shared/utils/format-zod.js';
 import { errorResponse } from '#/shared/utils/http-response.js';
 import type { NextFunction, Request, Response } from 'express';
-import { JOSEError, JWTExpired } from 'jose/errors';
-import { ZodError } from 'zod';
 
 export const errorHandler = (
   err: Error,

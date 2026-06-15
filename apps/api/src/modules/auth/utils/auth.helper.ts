@@ -1,6 +1,6 @@
 import type { Request } from 'express';
 
-import { UnauthorizedError } from '#/shared/errors/unauthorized.error.js';
+import { UnauthorizedError } from '#/shared/errors/index.js';
 
 export const getAuthenticatedUser = (req: Request) => {
   if (!req.user)

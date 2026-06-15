@@ -1,5 +1,6 @@
-import { getEnv } from '#/config/env.js';
 import type { CookieOptions } from 'express';
+
+import { getEnv } from '#/config/env.js';
 
 export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
 
