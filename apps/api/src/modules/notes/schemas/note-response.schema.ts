@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 const folderRelationSchema = z.object({
   id: z.uuid(),
-  title: z.string(),
+  name: z.string(),
   slug: z.string(),
 });
 

@@ -4,7 +4,7 @@ import type { Prisma } from '#/generated/prisma/client.js';
 import type { NoteRequestQuery } from './schemas/index.js';
 import { buildFindNotesWhereInput } from './utils/queries.helper.js';
 
-const noteSummarySelect = {
+const noteSummarySelect: Prisma.NoteSelect = {
   id: true,
   title: true,
   slug: true,
@@ -18,7 +18,7 @@ const noteSummarySelect = {
   folder: {
     select: {
       id: true,
-      title: true,
+      name: true,
       slug: true,
     },
   },

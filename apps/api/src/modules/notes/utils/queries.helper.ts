@@ -1,4 +1,4 @@
-import type { Prisma } from '#/generated/prisma/browser.js';
+import type { Prisma } from '#/generated/prisma/client.js';
 
 import type { NoteRequestQuery } from '../schemas/note-query.schema.js';
 
