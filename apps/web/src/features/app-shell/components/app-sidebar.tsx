@@ -15,14 +15,15 @@ import {
   useSidebar,
 } from '@/shared/components/ui/sidebar'
 
-import { NavUser } from './nav-user'
+import { mainNav } from '../constants/main-nav'
+import { UserMenu } from './user-menu'
 
 export function AppSidebar() {
   const { setOpenMobile } = useSidebar()
 
   return (
     <Sidebar>
-      <SidebarHeader className='gap-4 py-4'>
+      <SidebarHeader className='gap-3 py-3'>
         <div className='flex items-center justify-between px-2'>
           <Link to='/app/notes' onClick={() => setOpenMobile(false)}>
             <Logo />
@@ -41,12 +42,34 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+
+        <SidebarMenu>
+          {mainNav.map((data, idx) => (
+            <SidebarMenuItem key={idx}>
+              <SidebarMenuButton
+                onClick={() => setOpenMobile(false)}
+                render={
+                  <Link
+                    to={data.href}
+                    search={{}}
+                    activeProps={{
+                      className:
+                        'bg-sidebar-accent text-sidebar-accent-foreground font-semibold',
+                    }}
+                  />
+                }>
+                <data.icon className='size-4 shrink-0 opacity-60 transition-opacity group-hover:opacity-100' />
+                <span className='flex-1 truncate'>{data.label}</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
       </SidebarHeader>
       <SidebarSeparator className='mx-auto' />
       <SidebarContent></SidebarContent>
       <SidebarSeparator className='mx-auto' />
       <SidebarFooter>
-        <NavUser />
+        <UserMenu />
       </SidebarFooter>
     </Sidebar>
   )

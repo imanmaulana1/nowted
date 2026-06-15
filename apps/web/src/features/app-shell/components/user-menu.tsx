@@ -20,7 +20,7 @@ import {
   useSidebar,
 } from '@/shared/components/ui/sidebar'
 
-export function NavUser() {
+export function UserMenu() {
   const { isMobile, setOpenMobile } = useSidebar()
   const { data: user } = useCurrentUser()
   const { mutate: logout, isPending } = useLogout()
