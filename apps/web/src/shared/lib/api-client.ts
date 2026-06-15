@@ -1,7 +1,8 @@
-import { router } from '@/app/router'
-import type { ErrorResponse, SuccessResponse } from '@/shared/types/api.type'
 import axios, { AxiosError } from 'axios'
 import { createAuthRefresh } from 'axios-auth-refresh'
+
+import { router } from '@/app/router'
+import type { ErrorResponse, SuccessResponse } from '@/shared/types/api.type'
 
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
