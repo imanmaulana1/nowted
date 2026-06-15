@@ -85,3 +85,42 @@ export const logout = async (refreshToken: string) => {
   const refreshTokenHash = hashRefreshToken(refreshToken);
   await authRepository.deleteSessionByTokenHash(refreshTokenHash);
 };
+
+export const refresh = async (
+  token: string | undefined,
+  userAgent: string | null,
+  ipAddress: string | null
+) => {
+  if (!token)
+    throw new UnauthorizedError({
+      message: 'Invalid or session expired',
+    });
+
+  const tokenHash = hashRefreshToken(token);
+  const session = await authRepository.findSessionByTokenHash(tokenHash);
+  if (!session)
+    throw new UnauthorizedError({
+      message: 'Invalid or session expired',
+    });
+
+  const isExpired = session.expiresAt < new Date();
+  if (isExpired)
+    throw new UnauthorizedError({
+      message: 'Invalid or session expired',
+    });
+
+  const newAccessToken = await signAccessToken({ sub: session.userId });
+  const newRefreshToken = generateRefreshToken();
+
+  await authRepository.updateSessionByTokenHash(session.tokenHash, {
+    tokenHash: newRefreshToken.hash,
+    userAgent,
+    ipAddress,
+    expiresAt: new Date(Date.now() + REFRESH_TOKEN_MAX_AGE_MS),
+  });
+
+  return {
+    newAccessToken,
+    newRefreshToken: newRefreshToken.plain,
+  };
+};

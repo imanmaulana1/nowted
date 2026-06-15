@@ -28,6 +28,9 @@ export const existsByEmail = (email: string) => {
 export const createSession = (data: Prisma.SessionUncheckedCreateInput) => {
   return prisma.session.create({
     data,
+    select: {
+      id: true,
+    },
   });
 };
 
@@ -57,6 +60,38 @@ export const deleteSessionByTokenHash = (tokenHash: string) => {
   return prisma.session.deleteMany({
     where: {
       tokenHash,
+    },
+  });
+};
+
+export const findSessionByTokenHash = (tokenHash: string) => {
+  return prisma.session.findUnique({
+    where: {
+      tokenHash,
+    },
+    select: {
+      id: true,
+      userId: true,
+      tokenHash: true,
+      userAgent: true,
+      ipAddress: true,
+      expiresAt: true,
+      updatedAt: true,
+    },
+  });
+};
+
+export const updateSessionByTokenHash = (
+  tokenHash: string,
+  data: Prisma.SessionUncheckedUpdateInput
+) => {
+  return prisma.session.update({
+    where: {
+      tokenHash,
+    },
+    data,
+    select: {
+      id: true,
     },
   });
 };

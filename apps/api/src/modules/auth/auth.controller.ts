@@ -57,3 +57,29 @@ export const logout = async (req: Request, res: Response) => {
 
   res.sendStatus(204);
 };
+
+export const refresh = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken as string | undefined;
+  const userAgent = req.headers['user-agent'] ?? null;
+  const ipAddress = req.ip ?? null;
+
+  const { newAccessToken, newRefreshToken } = await authService.refresh(
+    refreshToken,
+    userAgent,
+    ipAddress
+  );
+
+  res.cookie(REFRESH_TOKEN_COOKIE_NAME, newRefreshToken, {
+    ...REFRESH_TOKEN_COOKIE_OPTIONS,
+    maxAge: REFRESH_TOKEN_MAX_AGE_MS,
+  });
+
+  res.status(200).json(
+    successResponse({
+      message: 'Token refreshed successfully',
+      data: {
+        accessToken: newAccessToken,
+      },
+    })
+  );
+};
