@@ -1,10 +1,9 @@
-import {
-  ContactSection,
-  HeroSection,
-  ProductSection,
-  SupportSection,
-} from '@/features/marketing'
 import { createFileRoute } from '@tanstack/react-router'
+
+import { ContactSection } from '@/features/marketing/components/contact-section'
+import { HeroSection } from '@/features/marketing/components/hero-section'
+import { ProductSection } from '@/features/marketing/components/product-section'
+import { SupportSection } from '@/features/marketing/components/support-section'
 
 export const Route = createFileRoute('/_public/_home/')({
   component: LandingPage,

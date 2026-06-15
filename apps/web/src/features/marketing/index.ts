@@ -1,6 +1,0 @@
-export * from './components/contact-section'
-export * from './components/hero-section'
-export * from './components/product-section'
-export * from './components/support-section'
-export * from './components/footer'
-export * from './components/header'

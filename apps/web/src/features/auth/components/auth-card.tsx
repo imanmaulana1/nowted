@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Logo } from '@/shared/components/logo'
@@ -10,7 +11,6 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card'
 import { cn } from '@/shared/lib/utils'
-import { Link } from '@tanstack/react-router'
 
 const authCardVariants = cva(
   'bg-background w-full shadow-xl sm:rounded-2xl border border-border/60',
