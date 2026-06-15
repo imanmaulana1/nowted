@@ -77,10 +77,30 @@ export const findAuthUserById = (id: string) => {
   });
 };
 
+export const findUserPasswordById = (id: string) => {
+  return prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      password: true,
+    },
+  });
+};
+
 export const deleteSessionByTokenHash = (tokenHash: string) => {
   return prisma.session.deleteMany({
     where: {
       tokenHash,
+    },
+  });
+};
+
+export const deleteSessionByUserId = (userId: string) => {
+  return prisma.session.deleteMany({
+    where: {
+      userId,
     },
   });
 };
@@ -111,6 +131,18 @@ export const updateSessionByTokenHash = (
       tokenHash,
     },
     data,
+    select: {
+      id: true,
+    },
+  });
+};
+
+export const updateUserPassword = (id: string, password: string) => {
+  return prisma.user.update({
+    where: { id },
+    data: {
+      password,
+    },
     select: {
       id: true,
     },

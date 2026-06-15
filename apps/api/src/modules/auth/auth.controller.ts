@@ -8,6 +8,7 @@ import {
   REFRESH_TOKEN_COOKIE_OPTIONS,
   REFRESH_TOKEN_MAX_AGE_MS,
 } from './constants/auth.cookie.js';
+import type { ChangePasswordBody } from './schemas/change-password.schema.js';
 import type { LoginBody } from './schemas/login.schema.js';
 import type { RegisterBody } from './schemas/register.schema.js';
 import { getAuthenticatedUser } from './utils/auth.helper.js';
@@ -93,4 +94,13 @@ export const getCurrentUser = async (req: Request, res: Response) => {
   res
     .status(200)
     .json(successResponse({ message: 'User retrieved successfully', data }));
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  const { id: userId } = getAuthenticatedUser(req);
+  const payload = req.validated.body as ChangePasswordBody;
+
+  await authService.changePassword(userId, payload);
+
+  res.sendStatus(204);
 };

@@ -1,12 +1,13 @@
-import { ConflictError } from '#/shared/errors/conflict.error.js';
-import { UnauthorizedError } from '#/shared/errors/unauthorized.error.js';
+import {
+  BadRequestError,
+  ConflictError,
+  UnauthorizedError,
+} from '#/shared/errors/index.js';
 
 import * as authRepository from './auth.repository.js';
 import { REFRESH_TOKEN_MAX_AGE_MS } from './constants/auth.cookie.js';
-import type { AuthUserResponse } from './schemas/auth-response.schema.js';
-import type { LoginResponse } from './schemas/login-response.schema.js';
+import type { ChangePasswordBody } from './schemas/change-password.schema.js';
 import type { LoginBody } from './schemas/login.schema.js';
-import type { RegisterResponse } from './schemas/register-response.schema.js';
 import type { RegisterBody } from './schemas/register.schema.js';
 import { hashPassword, verifyPassword } from './utils/password.helper.js';
 import {
@@ -15,9 +16,7 @@ import {
   signAccessToken,
 } from './utils/token.helper.js';
 
-export const register = async (
-  payload: RegisterBody
-): Promise<RegisterResponse> => {
+export const register = async (payload: RegisterBody) => {
   const existingUser = await authRepository.existsByEmail(payload.email);
   if (existingUser)
     throw new ConflictError({
@@ -39,7 +38,7 @@ export const login = async (
   payload: LoginBody,
   userAgent: string | null,
   ipAddress: string | null
-): Promise<LoginResponse> => {
+) => {
   const user = await authRepository.findAuthUserByEmail(payload.email);
   if (!user)
     throw new UnauthorizedError({
@@ -126,9 +125,7 @@ export const refresh = async (
   };
 };
 
-export const getCurrentUser = async (
-  userId: string
-): Promise<AuthUserResponse> => {
+export const getCurrentUser = async (userId: string) => {
   const user = await authRepository.findAuthUserById(userId);
   if (!user)
     throw new UnauthorizedError({
@@ -145,4 +142,29 @@ export const getCurrentUser = async (
     totalNotes: notes,
     totalFolders: folders,
   };
+};
+
+export const changePassword = async (
+  userId: string,
+  payload: ChangePasswordBody
+) => {
+  const user = await authRepository.findUserPasswordById(userId);
+  if (!user)
+    throw new UnauthorizedError({
+      message: 'User session is no longer valid',
+    });
+
+  const isPasswordValid = await verifyPassword(
+    payload.currentPassword,
+    user.password
+  );
+  if (!isPasswordValid)
+    throw new BadRequestError({
+      message: 'Current password is incorrect',
+    });
+
+  const newPasswordHash = await hashPassword(payload.newPassword);
+  await authRepository.updateUserPassword(userId, newPasswordHash);
+
+  await authRepository.deleteSessionByUserId(userId);
 };
