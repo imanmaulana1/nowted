@@ -32,7 +32,7 @@ export function LoginForm() {
       mutate(value, {
         onSuccess: () => {
           form.reset()
-          navigate({ to: '/app' })
+          navigate({ to: '/app/notes' })
         },
       })
     },

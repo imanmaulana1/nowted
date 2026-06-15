@@ -1,7 +1,4 @@
 import type { SuccessResponse } from '@/shared/types/api.type'
 import type { AuthUser } from './auth.type'
 
-export type LoginResponse = SuccessResponse<{
-  user: AuthUser
-  accessToken: string
-}>
+export type CurrentUserResponse = SuccessResponse<AuthUser>

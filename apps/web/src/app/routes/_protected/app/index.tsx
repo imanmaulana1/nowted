@@ -1,23 +1,7 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-
-import { useLogout } from '@/features/auth/hooks/use-logout'
-import { Button } from '@/shared/components/ui/button'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_protected/app/')({
-  component: RouteComponent,
+  beforeLoad: () => {
+    throw redirect({ to: '/app/notes' })
+  },
 })
-
-function RouteComponent() {
-  const { mutate } = useLogout()
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    mutate(undefined, {
-      onSuccess: () => {
-        navigate({ to: '/' })
-      },
-    })
-  }
-
-  return <Button onClick={handleLogout}>Logout</Button>
-}
