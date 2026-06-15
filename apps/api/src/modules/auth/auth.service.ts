@@ -3,6 +3,7 @@ import { UnauthorizedError } from '#/shared/errors/unauthorized.error.js';
 
 import * as authRepository from './auth.repository.js';
 import { REFRESH_TOKEN_MAX_AGE_MS } from './constants/auth.cookie.js';
+import type { AuthUserResponse } from './schemas/auth-response.schema.js';
 import type { LoginResponse } from './schemas/login-response.schema.js';
 import type { LoginBody } from './schemas/login.schema.js';
 import type { RegisterResponse } from './schemas/register-response.schema.js';
@@ -122,5 +123,26 @@ export const refresh = async (
   return {
     newAccessToken,
     newRefreshToken: newRefreshToken.plain,
+  };
+};
+
+export const getCurrentUser = async (
+  userId: string
+): Promise<AuthUserResponse> => {
+  const user = await authRepository.findAuthUserById(userId);
+  if (!user)
+    throw new UnauthorizedError({
+      message: 'User session is no longer valid',
+    });
+
+  const {
+    _count: { folders, notes },
+    ...restUser
+  } = user;
+
+  return {
+    ...restUser,
+    totalNotes: notes,
+    totalFolders: folders,
   };
 };

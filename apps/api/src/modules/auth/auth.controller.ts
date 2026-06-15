@@ -10,6 +10,7 @@ import {
 } from './constants/auth.cookie.js';
 import type { LoginBody } from './schemas/login.schema.js';
 import type { RegisterBody } from './schemas/register.schema.js';
+import { getAuthenticatedUser } from './utils/auth.helper.js';
 
 export const register = async (req: Request, res: Response) => {
   const payload = req.validated.body as RegisterBody;
@@ -82,4 +83,14 @@ export const refresh = async (req: Request, res: Response) => {
       },
     })
   );
+};
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  const { id: userId } = getAuthenticatedUser(req);
+
+  const data = await authService.getCurrentUser(userId);
+
+  res
+    .status(200)
+    .json(successResponse({ message: 'User retrieved successfully', data }));
 };

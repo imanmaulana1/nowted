@@ -56,6 +56,27 @@ export const findAuthUserByEmail = (email: string) => {
   });
 };
 
+export const findAuthUserById = (id: string) => {
+  return prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      avatarUrl: true,
+      createdAt: true,
+      _count: {
+        select: {
+          folders: true,
+          notes: true,
+        },
+      },
+    },
+  });
+};
+
 export const deleteSessionByTokenHash = (tokenHash: string) => {
   return prisma.session.deleteMany({
     where: {

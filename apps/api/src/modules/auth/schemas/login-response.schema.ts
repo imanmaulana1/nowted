@@ -1,17 +1,9 @@
 import { z } from 'zod';
 
-const authUserSchema = z.object({
-  id: z.string(),
-  fullName: z.string(),
-  email: z.email(),
-  avatarUrl: z.string().nullable(),
-  createdAt: z.date(),
-  totalNotes: z.number(),
-  totalFolders: z.number(),
-});
+import { authUserResponseSchema } from './auth-response.schema.js';
 
 export const loginResponseSchema = z.object({
-  user: authUserSchema,
+  user: authUserResponseSchema,
   accessToken: z.string(),
   refreshToken: z.string(),
 });

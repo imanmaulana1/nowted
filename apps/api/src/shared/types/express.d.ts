@@ -6,6 +6,9 @@ declare global {
         params?: unknown;
         query?: unknown;
       };
+      user?: {
+        id: string;
+      };
     }
   }
 }
