@@ -9,7 +9,7 @@ export const EXTENSIONS = [
     codeBlock: {
       HTMLAttributes: {
         class:
-          'not-prose bg-muted/50 dark:bg-muted/20 border-border max-w-2xl overflow-x-auto rounded-lg border p-4 font-mono text-sm shadow-sm text-foreground',
+          'not-prose w-full bg-muted/50 dark:bg-muted/20 border-border max-w-2xl whitespace-pre-wrap break-words rounded-lg border p-4 font-mono text-sm shadow-sm text-foreground',
       },
     },
     link: {

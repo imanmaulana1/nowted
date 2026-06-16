@@ -15,6 +15,7 @@ import {
   useSidebar,
 } from '@/shared/components/ui/sidebar'
 
+import { FavoriteList } from '@/features/notes/components/favorite-list'
 import { mainNav } from '../constants/main-nav'
 import { UserMenu } from './user-menu'
 
@@ -55,16 +56,18 @@ export function AppSidebar() {
                     search={{}}
                     activeProps={{
                       className:
-                        'bg-sidebar-accent text-sidebar-accent-foreground font-semibold hover:bg-sidebar-accent',
+                        'bg-sidebar-accent text-sidebar-accent-foreground font-semibold hover:bg-sidebar-accent is-active',
                     }}
                   />
                 }>
-                <data.icon className='size-4 shrink-0 opacity-60 transition-opacity group-hover:opacity-100' />
+                <data.icon className='size-4 shrink-0 opacity-40 transition-opacity group-hover:opacity-70 group-[.is-active]/menu-button:opacity-100' />
                 <span className='flex-1 truncate'>{data.label}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
+
+        <FavoriteList />
       </SidebarHeader>
       <SidebarSeparator className='mx-auto' />
       <SidebarContent></SidebarContent>

@@ -20,7 +20,7 @@ export function NoteDetail({ content }: NoteDetailProps) {
         options: {
           nodeMapping: {
             codeBlock: ({ children }) => (
-              <pre className='not-prose bg-muted/50 dark:bg-muted/20 border-border max-w-2xl overflow-x-auto rounded-lg border p-4 font-mono text-sm shadow-sm'>
+              <pre className='not-prose bg-muted/50 dark:bg-muted/20 border-border w-full max-w-2xl rounded-lg border p-4 font-mono text-sm wrap-break-word whitespace-pre-wrap shadow-sm'>
                 <code className='text-foreground'>{children}</code>
               </pre>
             ),
