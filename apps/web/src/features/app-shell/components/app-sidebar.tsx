@@ -48,13 +48,14 @@ export function AppSidebar() {
             <SidebarMenuItem key={idx}>
               <SidebarMenuButton
                 onClick={() => setOpenMobile(false)}
+                className='hover:bg-sidebar-accent/50 transition-colors duration-100'
                 render={
                   <Link
                     to={data.href}
                     search={{}}
                     activeProps={{
                       className:
-                        'bg-sidebar-accent text-sidebar-accent-foreground font-semibold',
+                        'bg-sidebar-accent text-sidebar-accent-foreground font-semibold hover:bg-sidebar-accent',
                     }}
                   />
                 }>
