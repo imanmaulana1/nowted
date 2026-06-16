@@ -6,4 +6,4 @@ import { noteRouter } from '#/modules/notes/note.route.js';
 export const v1Router = Router();
 
 v1Router.use('/auth', authRouter);
-v1Router.use('/notes', noteRouter)
+v1Router.use('/notes', noteRouter);

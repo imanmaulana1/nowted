@@ -36,9 +36,7 @@ export const findNotes = (userId: string, filter: NoteRequestQuery) => {
   return prisma.note.findMany({
     where,
     select: noteSummarySelect,
-    orderBy: {
-      [filter.orderBy]: 'desc',
-    },
+    orderBy: [{ [filter.orderBy]: 'desc' }, { id: 'desc' }],
   });
 };
 
