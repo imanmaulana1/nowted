@@ -8,6 +8,8 @@ import { NoteDetailNotFound } from '@/features/notes/components/note-detail-not-
 import { NoteDetailSkeleton } from '@/features/notes/components/note-detail-skeleton'
 import { ToolbarArchive } from '@/features/notes/components/toolbar-archive'
 import { NOTE_MODAL_CONFIRMATION_PROPS } from '@/features/notes/constants/note-modal'
+import { useTrash } from '@/features/notes/hooks/use-trash'
+import { useUnarchive } from '@/features/notes/hooks/use-unarchive'
 import { noteQueryOptions } from '@/features/notes/lib/query-options'
 import { ModalConfirmation } from '@/shared/components/modal-confirmation'
 import { parseApiError } from '@/shared/lib/error-parser'
@@ -34,9 +36,7 @@ export const Route = createFileRoute('/_protected/app/archive/$noteSlug')({
   component: RouteComponent,
   pendingComponent: NoteDetailSkeleton,
   notFoundComponent: NoteDetailNotFound,
-  errorComponent: ({ error, reset }) => (
-    <NoteDetailError error={error as Error} onRetry={reset} />
-  ),
+  errorComponent: ({ error }) => <NoteDetailError error={error} />,
 })
 
 function RouteComponent() {
@@ -51,6 +51,9 @@ function RouteComponent() {
   const { data: note, isPending: isLoading } = useSuspenseQuery(
     noteQueryOptions(noteSlug)
   )
+
+  const { mutate: unarchiveNote, isPending: isUnarchiving } = useUnarchive()
+  const { mutate: trashNote, isPending: isTrashing } = useTrash()
 
   const isFullscreen = !!fullscreen
 
@@ -83,6 +86,28 @@ function RouteComponent() {
     })
   }
 
+  const handleUnarchive = () => {
+    unarchiveNote(noteSlug, {
+      onSuccess: () => {
+        setOpenUnarchiveModal(false)
+        navigate({
+          to: '/app/archive',
+        })
+      },
+    })
+  }
+
+  const handleTrash = () => {
+    trashNote(noteSlug, {
+      onSuccess: () => {
+        setOpenTrashModal(false)
+        navigate({
+          to: '/app/archive',
+        })
+      },
+    })
+  }
+
   const toolbarProps = {
     isFullscreen,
     onFullscreen: toggleFullscreen,
@@ -104,13 +129,15 @@ function RouteComponent() {
       <ModalConfirmation
         open={openUnarchiveModal}
         onOpenChange={setOpenUnarchiveModal}
-        onConfirm={() => {}}
+        onConfirm={handleUnarchive}
+        isConfirming={isUnarchiving}
         {...NOTE_MODAL_CONFIRMATION_PROPS.UNARCHIVE}
       />
       <ModalConfirmation
         open={openTrashModal}
         onOpenChange={setOpenTrashModal}
-        onConfirm={() => {}}
+        onConfirm={handleTrash}
+        isConfirming={isTrashing}
         {...NOTE_MODAL_CONFIRMATION_PROPS.TRASH}
       />
     </NoteDetailLayout>

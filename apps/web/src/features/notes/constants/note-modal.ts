@@ -4,7 +4,7 @@ import { Archive, ArchiveRestore, RotateCcw, Trash2 } from 'lucide-react'
 export const NOTE_MODAL_CONFIRMATION_PROPS = {
   ARCHIVE: {
     title: 'Archive this note?',
-    description: 'It will be moved to Archive. You can restore it later.',
+    description: 'It will be moved to Archive. You can restore it later',
     icon: Archive,
     confirmText: 'Archive',
   } satisfies Omit<
@@ -13,7 +13,7 @@ export const NOTE_MODAL_CONFIRMATION_PROPS = {
   >,
   UNARCHIVE: {
     title: 'Unarchive this note?',
-    description: 'It will be moved back to your Notes list.',
+    description: 'It will be moved back to your Notes list',
     icon: ArchiveRestore,
     confirmText: 'Unarchive',
   } satisfies Omit<
@@ -22,7 +22,7 @@ export const NOTE_MODAL_CONFIRMATION_PROPS = {
   >,
   RESTORE: {
     title: 'Restore this note?',
-    description: 'It will go back to your Notes list.',
+    description: 'It will go back to your Notes list',
     icon: RotateCcw,
     confirmText: 'Restore',
   } satisfies Omit<
@@ -31,7 +31,7 @@ export const NOTE_MODAL_CONFIRMATION_PROPS = {
   >,
   TRASH: {
     title: 'Move to Trash?',
-    description: 'You can restore it later from Trash.',
+    description: 'You can restore it later from Trash',
     icon: Trash2,
     confirmText: 'Move to Trash',
     confirmVariant: 'destructive',
@@ -41,7 +41,7 @@ export const NOTE_MODAL_CONFIRMATION_PROPS = {
   >,
   DELETE: {
     title: 'Delete permanently?',
-    description: `This note will be deleted permanently and can't be restored.`,
+    description: `This note will be deleted permanently and can't be restored`,
     icon: Trash2,
     confirmText: 'Delete',
     confirmVariant: 'destructive',

@@ -5,6 +5,9 @@ import { useState } from 'react'
 import { NoteDetailLayout } from '@/features/notes/components/note-detail-layout'
 import { ToolbarActive } from '@/features/notes/components/toolbar-active'
 import { NOTE_MODAL_CONFIRMATION_PROPS } from '@/features/notes/constants/note-modal'
+import { useArchive } from '@/features/notes/hooks/use-archive'
+import { useToggleFavorite } from '@/features/notes/hooks/use-toggle-favorite'
+import { useTrash } from '@/features/notes/hooks/use-trash'
 import { noteQueryOptions } from '@/features/notes/lib/query-options'
 import { ModalConfirmation } from '@/shared/components/modal-confirmation'
 
@@ -24,6 +27,10 @@ function RouteComponent() {
   const { data: note, isPending: isLoading } = useSuspenseQuery(
     noteQueryOptions(noteSlug)
   )
+
+  const { mutate: toggleFavorite } = useToggleFavorite()
+  const { mutate: archiveNote, isPending: isArchiving } = useArchive()
+  const { mutate: trashNote, isPending: isTrashing } = useTrash()
 
   const isFullscreen = !!fullscreen
 
@@ -52,6 +59,28 @@ function RouteComponent() {
     })
   }
 
+  const handleArchive = () => {
+    archiveNote(noteSlug, {
+      onSuccess: () => {
+        setOpenArchiveModal(false)
+        navigate({
+          to: '/app/notes',
+        })
+      },
+    })
+  }
+
+  const handleTrash = () => {
+    trashNote(noteSlug, {
+      onSuccess: () => {
+        setOpenTrashModal(false)
+        navigate({
+          to: '/app/notes',
+        })
+      },
+    })
+  }
+
   const toolbarProps = {
     isFullscreen,
     noteSlug,
@@ -61,7 +90,7 @@ function RouteComponent() {
     onArchive: () => setOpenArchiveModal(true),
     onTrash: () => setOpenTrashModal(true),
     onShowInfo: () => setOpenInfoModal(true),
-    onToggleFavorite: () => {},
+    onToggleFavorite: () => toggleFavorite(noteSlug),
     onExport: () => {},
   } satisfies React.ComponentProps<typeof ToolbarActive>
 
@@ -76,13 +105,15 @@ function RouteComponent() {
       <ModalConfirmation
         open={openTrashModal}
         onOpenChange={setOpenTrashModal}
-        onConfirm={() => {}}
+        onConfirm={handleTrash}
+        isConfirming={isTrashing}
         {...NOTE_MODAL_CONFIRMATION_PROPS.TRASH}
       />
       <ModalConfirmation
         open={openArchiveModal}
         onOpenChange={setOpenArchiveModal}
-        onConfirm={() => {}}
+        onConfirm={handleArchive}
+        isConfirming={isArchiving}
         {...NOTE_MODAL_CONFIRMATION_PROPS.ARCHIVE}
       />
     </NoteDetailLayout>

@@ -33,3 +33,14 @@ export interface Note extends NoteSummary {
   content: JSONContent
   plainText: string
 }
+
+export interface NoteState {
+  id: string
+  title: string
+  slug: string
+  isFavorite: boolean
+  favoriteAt: string | null
+  archivedAt: string | null
+  trashedAt: string | null
+  updatedAt: string
+}

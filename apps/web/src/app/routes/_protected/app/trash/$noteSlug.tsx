@@ -8,6 +8,8 @@ import { NoteDetailNotFound } from '@/features/notes/components/note-detail-not-
 import { NoteDetailSkeleton } from '@/features/notes/components/note-detail-skeleton'
 import { ToolbarTrash } from '@/features/notes/components/toolbar-trash'
 import { NOTE_MODAL_CONFIRMATION_PROPS } from '@/features/notes/constants/note-modal'
+import { useDelete } from '@/features/notes/hooks/use-delete'
+import { useRestore } from '@/features/notes/hooks/use-restore'
 import { noteQueryOptions } from '@/features/notes/lib/query-options'
 import { ModalConfirmation } from '@/shared/components/modal-confirmation'
 import { parseApiError } from '@/shared/lib/error-parser'
@@ -50,6 +52,9 @@ function RouteComponent() {
     noteQueryOptions(noteSlug)
   )
 
+  const { mutate: restoreNote, isPending: isRestoring } = useRestore()
+  const { mutate: deleteNote, isPending: isDeleting } = useDelete()
+
   const isFullscreen = !!fullscreen
 
   const handleBack = () => {
@@ -77,6 +82,28 @@ function RouteComponent() {
     })
   }
 
+  const handleRestore = () => {
+    restoreNote(noteSlug, {
+      onSuccess: () => {
+        setOpenRestoreModal(false)
+        navigate({
+          to: '/app/trash',
+        })
+      },
+    })
+  }
+
+  const handleDelete = () => {
+    deleteNote(noteSlug, {
+      onSuccess: () => {
+        setOpenDeleteModal(false)
+        navigate({
+          to: '/app/trash',
+        })
+      },
+    })
+  }
+
   const toolbarProps = {
     isFullscreen,
     onFullscreen: toggleFullscreen,
@@ -98,13 +125,15 @@ function RouteComponent() {
       <ModalConfirmation
         open={openRestoreModal}
         onOpenChange={setOpenRestoreModal}
-        onConfirm={() => {}}
+        onConfirm={handleRestore}
+        isConfirming={isRestoring}
         {...NOTE_MODAL_CONFIRMATION_PROPS.RESTORE}
       />
       <ModalConfirmation
         open={openDeleteModal}
         onOpenChange={setOpenDeleteModal}
-        onConfirm={() => {}}
+        onConfirm={handleDelete}
+        isConfirming={isDeleting}
         {...NOTE_MODAL_CONFIRMATION_PROPS.DELETE}
       />
     </NoteDetailLayout>
