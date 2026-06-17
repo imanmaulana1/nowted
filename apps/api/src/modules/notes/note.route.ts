@@ -31,7 +31,7 @@ noteRouter.get(
   noteController.getNote
 );
 
-noteRouter.put(
+noteRouter.patch(
   '/:noteSlug',
   validateRequest(noteParamsSchema, 'params'),
   validateRequest(noteBodySchema),

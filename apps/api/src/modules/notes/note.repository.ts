@@ -4,7 +4,7 @@ import type { Prisma } from '#/generated/prisma/client.js';
 import type { NoteRequestQuery } from './schemas/index.js';
 import { buildFindNotesWhereInput } from './utils/queries.helper.js';
 
-const noteSummarySelect: Prisma.NoteSelect = {
+const noteSummarySelect = {
   id: true,
   title: true,
   slug: true,
@@ -22,13 +22,13 @@ const noteSummarySelect: Prisma.NoteSelect = {
       slug: true,
     },
   },
-};
+} satisfies Prisma.NoteSelect;
 
 const noteDetailSelect = {
   ...noteSummarySelect,
   content: true,
   plainText: true,
-};
+} satisfies Prisma.NoteSelect;
 
 export const findNotes = (userId: string, filter: NoteRequestQuery) => {
   const where = buildFindNotesWhereInput(userId, filter);
@@ -72,7 +72,7 @@ export const updateNote = (
   return prisma.note.update({
     where: { id, userId },
     data,
-    select: noteSummarySelect,
+    select: noteDetailSelect,
   });
 };
 
