@@ -5,7 +5,7 @@ export const authUserResponseSchema = z.object({
   fullName: z.string(),
   email: z.email(),
   avatarUrl: z.string().nullable(),
-  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
   totalNotes: z.number(),
   totalFolders: z.number(),
 });

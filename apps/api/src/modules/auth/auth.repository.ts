@@ -66,7 +66,7 @@ export const findAuthUserById = (id: string) => {
       fullName: true,
       email: true,
       avatarUrl: true,
-      createdAt: true,
+      updatedAt: true,
       _count: {
         select: {
           folders: true,
