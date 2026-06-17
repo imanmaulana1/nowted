@@ -8,3 +8,7 @@ export type GetNoteResponse = SuccessResponse<Note>
 export type NoteMutationResponse = SuccessResponse<NoteState>
 
 export type DeleteNoteResponse = SuccessResponse<Pick<Note, 'id' | 'slug'>>
+
+export type CreateNoteResponse = SuccessResponse<Note>
+
+export type UpdateNoteResponse = SuccessResponse<Note>
