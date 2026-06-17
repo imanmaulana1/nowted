@@ -9,7 +9,7 @@ import { notesQueryKeys } from '../lib/query-keys'
 export const useDelete = () => {
   const queryClient = useQueryClient()
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: deleteNote,
     onSuccess: (_data, noteSlug) => {
       queryClient.removeQueries({
@@ -34,6 +34,4 @@ export const useDelete = () => {
       })
     },
   })
-
-  return mutation
 }

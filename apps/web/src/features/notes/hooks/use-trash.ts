@@ -8,19 +8,16 @@ import type { Note } from '../types/note.type'
 export const useTrash = () => {
   const queryClient = useQueryClient()
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: trashNote,
     onSuccess: (data, noteSlug) => {
-      queryClient.setQueryData<Note>(
-        notesQueryKeys.detail(noteSlug),
-        (old) => {
-          if (!old) return old
-          return {
-            ...old,
-            ...data,
-          }
+      queryClient.setQueryData<Note>(notesQueryKeys.detail(noteSlug), (old) => {
+        if (!old) return old
+        return {
+          ...old,
+          ...data,
         }
-      )
+      })
 
       queryClient.invalidateQueries({
         queryKey: notesQueryKeys.lists(),
@@ -36,6 +33,4 @@ export const useTrash = () => {
       })
     },
   })
-
-  return mutation
 }
