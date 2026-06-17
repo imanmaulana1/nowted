@@ -20,7 +20,8 @@ export function usePassword() {
       switch (code) {
         case 'BAD_REQUEST':
           toast.error('Incorrect current password', {
-            description: 'The current password you entered is incorrect. Please try again',
+            description:
+              'The current password you entered is incorrect. Please try again',
           })
           break
         case 'NETWORK_ERROR':

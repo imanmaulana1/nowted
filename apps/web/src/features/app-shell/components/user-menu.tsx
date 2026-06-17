@@ -1,8 +1,9 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ChevronsUpDown, Lock, LogOut, User } from 'lucide-react'
 
-import { useCurrentUser } from '@/features/auth/hooks/use-current-user'
 import { useLogout } from '@/features/auth/hooks/use-logout'
+import { meQueryOptions } from '@/features/auth/lib/query-options'
 import { AvatarUser } from '@/shared/components/avatar-user'
 import {
   DropdownMenu,
@@ -22,7 +23,7 @@ import {
 
 export function UserMenu() {
   const { isMobile, setOpenMobile } = useSidebar()
-  const { data: user } = useCurrentUser()
+  const { data: user } = useSuspenseQuery(meQueryOptions())
   const { mutate: logout, isPending } = useLogout()
 
   return (

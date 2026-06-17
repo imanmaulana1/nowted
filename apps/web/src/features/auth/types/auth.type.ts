@@ -3,7 +3,7 @@ export interface AuthUser {
   fullName: string
   email: string
   avatarUrl: string | null
-  createdAt: Date
+  updatedAt: string
   totalNotes: number
   totalFolders: number
 }
