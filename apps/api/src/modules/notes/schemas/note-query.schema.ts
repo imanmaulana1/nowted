@@ -5,7 +5,7 @@ export const noteQuerySchema = z.object({
   favorite: z.stringbool().optional(),
   search: z.string().optional(),
   orderBy: z
-    .enum(['createdAt', 'updatedAt', 'favoriteAt'])
+    .enum(['createdAt', 'updatedAt', 'favoriteAt', 'archivedAt', 'trashedAt'])
     .default('updatedAt'),
 });
 
