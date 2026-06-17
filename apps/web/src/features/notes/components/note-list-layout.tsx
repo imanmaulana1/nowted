@@ -9,12 +9,13 @@ import { useDebounce } from '@/shared/hooks/use-debounce'
 import { cn } from '@/shared/lib/utils'
 
 import { notesQueryOptions } from '../lib/query-options'
-import type { NoteStatus } from '../types/note.type'
+import type { NoteStatus, OrderBy } from '../types/note.type'
 import { NoteList } from './note-list'
 
 type NoteListLayoutProps = {
   title: string
   status: NoteStatus
+  orderBy?: OrderBy
   basePath: string
   to?:
     | '/app/notes/$noteSlug'
@@ -28,6 +29,7 @@ export function NoteListLayout({
   title,
   status,
   basePath,
+  orderBy = 'updatedAt',
   to = '/app/notes/$noteSlug',
   isFullscreen,
   children,
@@ -45,6 +47,7 @@ export function NoteListLayout({
       notesQueryOptions({
         status: status,
         search: debouncedSearch,
+        orderBy,
       })
     )
   )

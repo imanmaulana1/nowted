@@ -2,7 +2,12 @@ import type { JSONContent } from '@tiptap/react'
 
 export type NoteStatus = 'active' | 'archive' | 'trash'
 
-export type OrderBy = 'createdAt' | 'updatedAt' | 'favoriteAt'
+export type OrderBy =
+  | 'createdAt'
+  | 'updatedAt'
+  | 'favoriteAt'
+  | 'archivedAt'
+  | 'trashedAt'
 
 export interface GetNotesParams {
   status?: NoteStatus

@@ -15,6 +15,7 @@ function RouteComponent() {
   return (
     <NoteListLayout
       status='archive'
+      orderBy='archivedAt'
       to='/app/archive/$noteSlug'
       isFullscreen={isFullscreen}
       basePath='/app/archive'

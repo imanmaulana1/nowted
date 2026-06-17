@@ -3,15 +3,27 @@ import { toast } from 'sonner'
 
 import { archiveNote } from '../api/archive-note.api'
 import { notesQueryKeys } from '../lib/query-keys'
+import type { Note } from '../types/note.type'
 
 export const useArchive = () => {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationFn: archiveNote,
-    onSuccess: (data) => {
+    onSuccess: (data, noteSlug) => {
+      queryClient.setQueryData<Note>(
+        notesQueryKeys.detail(noteSlug),
+        (old) => {
+          if (!old) return old
+          return {
+            ...old,
+            ...data,
+          }
+        }
+      )
+
       queryClient.invalidateQueries({
-        queryKey: notesQueryKeys.all,
+        queryKey: notesQueryKeys.lists(),
       })
 
       toast.success('Note Archived', {

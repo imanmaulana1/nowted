@@ -19,7 +19,7 @@ export function useToggleFavorite() {
         notesQueryKeys.detail(noteSlug)
       )
 
-      const previousLists = queryClient.getQueriesData({
+      const previousLists = queryClient.getQueriesData<NoteSummary[]>({
         queryKey: notesQueryKeys.lists(),
       })
 

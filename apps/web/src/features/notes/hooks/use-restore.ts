@@ -3,15 +3,27 @@ import { toast } from 'sonner'
 
 import { restoreNote } from '../api/restore-note.api'
 import { notesQueryKeys } from '../lib/query-keys'
+import type { Note } from '../types/note.type'
 
 export const useRestore = () => {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationFn: restoreNote,
-    onSuccess: (data) => {
+    onSuccess: (data, noteSlug) => {
+      queryClient.setQueryData<Note>(
+        notesQueryKeys.detail(noteSlug),
+        (old) => {
+          if (!old) return old
+          return {
+            ...old,
+            ...data,
+          }
+        }
+      )
+
       queryClient.invalidateQueries({
-        queryKey: notesQueryKeys.all,
+        queryKey: notesQueryKeys.lists(),
       })
 
       toast.success('Note Restored', {

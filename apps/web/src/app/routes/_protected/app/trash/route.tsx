@@ -15,6 +15,7 @@ function RouteComponent() {
   return (
     <NoteListLayout
       status='trash'
+      orderBy='trashedAt'
       to='/app/trash/$noteSlug'
       isFullscreen={isFullscreen}
       basePath='/app/trash'
