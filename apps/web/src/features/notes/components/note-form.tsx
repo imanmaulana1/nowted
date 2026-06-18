@@ -1,6 +1,8 @@
 import { useForm } from '@tanstack/react-form'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { EditorContent, useEditor } from '@tiptap/react'
+import { marked } from 'marked'
+import { useRef } from 'react'
 
 import { foldersQueryOptions } from '@/features/folders/lib/query-options'
 import { Field, FieldError } from '@/shared/components/ui/field'
@@ -67,6 +69,26 @@ export function NoteForm({
     },
   })
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleImport = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !editor) return
+
+    const text = await file.text()
+    const html = await marked.parse(text)
+
+    editor.commands.setContent(html)
+    form.setFieldValue('content', editor.getJSON())
+    form.setFieldValue('plainText', editor.getText().trim())
+
+    e.target.value = ''
+  }
+
   const activeSubmitLabel =
     submitLabel || (mode === 'create' ? 'Save Note' : 'Update Note')
 
@@ -92,10 +114,19 @@ export function NoteForm({
                 folders={folders}
                 folderId={field.state.value}
                 onFolderChange={(id) => field.handleChange(id)}
+                onImport={handleImport}
               />
             )}
           />
         </header>
+
+        <input
+          ref={fileInputRef}
+          type='file'
+          accept='.md,.markdown'
+          className='hidden'
+          onChange={handleFileChange}
+        />
 
         <ToolbarRichText editor={editor} />
 

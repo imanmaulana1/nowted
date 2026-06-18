@@ -5,6 +5,7 @@ import {
   FolderOpen,
   Maximize,
   Minimize,
+  Upload,
 } from 'lucide-react'
 
 import type { FolderWithNotes } from '@/features/folders/types/folder.type'
@@ -32,6 +33,7 @@ type ToolbarCreateOrUpdateProps = {
   folderId?: string | null
   folders: FolderWithNotes[]
   onFolderChange: (id: string | null) => void
+  onImport: () => void
 }
 
 export function ToolbarCreateOrUpdate({
@@ -44,6 +46,7 @@ export function ToolbarCreateOrUpdate({
   folderId,
   folders,
   onFolderChange,
+  onImport,
 }: ToolbarCreateOrUpdateProps) {
   const selectedFolder = folders.find((folder) => folder.id === folderId)
 
@@ -88,6 +91,16 @@ export function ToolbarCreateOrUpdate({
         </DropdownMenu>
       </div>
       <div className='flex items-center gap-1.5'>
+        <Button
+          type='button'
+          variant='ghost'
+          size='sm'
+          onClick={onImport}
+          className='text-muted-foreground hover:text-foreground h-8 px-3'>
+          <Upload className='size-4' />
+          <span className='hidden sm:inline'>Import .md</span>
+        </Button>
+
         <Button
           variant='ghost'
           size='sm'

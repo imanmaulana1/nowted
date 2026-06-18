@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import type { JSONContent } from '@tiptap/react'
 import { useState } from 'react'
 
 import { NoteDetailLayout } from '@/features/notes/components/note-detail-layout'
@@ -9,6 +10,8 @@ import { useArchive } from '@/features/notes/hooks/use-archive'
 import { useToggleFavorite } from '@/features/notes/hooks/use-toggle-favorite'
 import { useTrash } from '@/features/notes/hooks/use-trash'
 import { noteQueryOptions } from '@/features/notes/lib/query-options'
+import { jsonToMarkdown } from '@/features/notes/lib/tiptap-export'
+import { downloadFile } from '@/features/notes/lib/utils'
 import { ModalConfirmation } from '@/shared/components/modal-confirmation'
 
 export const Route = createFileRoute('/_protected/app/notes/$noteSlug/')({
@@ -81,6 +84,21 @@ function RouteComponent() {
     })
   }
 
+  const exportAsMarkdown = (title: string, content: JSONContent) => {
+    const markdownContent = jsonToMarkdown(content)
+    const sanitizedTitle =
+      (title || 'untitled')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '') || 'note'
+
+    downloadFile(
+      markdownContent,
+      `${sanitizedTitle}.md`,
+      'text/markdown;charset=utf-8'
+    )
+  }
+
   const toolbarProps = {
     isFullscreen,
     noteSlug,
@@ -91,7 +109,7 @@ function RouteComponent() {
     onTrash: () => setOpenTrashModal(true),
     onShowInfo: () => setOpenInfoModal(true),
     onToggleFavorite: () => toggleFavorite(noteSlug),
-    onExport: () => {},
+    onExport: () => exportAsMarkdown(note.title, note.content),
   } satisfies React.ComponentProps<typeof ToolbarActive>
 
   return (

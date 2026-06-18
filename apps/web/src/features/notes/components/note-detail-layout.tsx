@@ -1,9 +1,16 @@
-import { Button } from '@/shared/components/ui/button'
 import { ChevronLeft } from 'lucide-react'
+import { lazy, Suspense } from 'react'
+
+import { Button } from '@/shared/components/ui/button'
+
 import type { Note } from '../types/note.type'
 import { ModalNoteInfo } from './modal-note-info'
-import { NoteDetail } from './note-detail'
 import { NoteDetailMeta } from './note-detail-meta'
+import { NoteDetailSkeleton } from './note-detail-skeleton'
+
+const NoteDetail = lazy(() =>
+  import('./note-detail').then((m) => ({ default: m.NoteDetail }))
+)
 
 type NoteDetailLayoutProps = {
   note: Note
@@ -44,7 +51,9 @@ export function NoteDetailLayout({
         {toolbar}
       </header>
 
-      <NoteDetail content={note.content} />
+      <Suspense fallback={<NoteDetailSkeleton />}>
+        <NoteDetail content={note.content} />
+      </Suspense>
 
       <ModalNoteInfo note={note} open={showInfo} onOpenChange={setShowInfo} />
       {children}
