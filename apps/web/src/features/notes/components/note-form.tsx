@@ -1,6 +1,8 @@
 import { useForm } from '@tanstack/react-form'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { EditorContent, useEditor } from '@tiptap/react'
 
+import { foldersQueryOptions } from '@/features/folders/lib/query-options'
 import { Field, FieldError } from '@/shared/components/ui/field'
 import { Input } from '@/shared/components/ui/input'
 import { ScrollArea } from '@/shared/components/ui/scroll-area'
@@ -38,6 +40,8 @@ export function NoteForm({
   isLoading,
   submitLabel,
 }: NoteFormProps) {
+  const { data: folders } = useSuspenseQuery(foldersQueryOptions())
+
   const form = useForm({
     defaultValues: defaultValues as NoteInput,
     validators: {
@@ -77,7 +81,7 @@ export function NoteForm({
         <header className='border-border/50 bg-card/10 border-b p-3 backdrop-blur-sm'>
           <form.Field
             name='folderId'
-            children={() => (
+            children={(field) => (
               <ToolbarCreateOrUpdate
                 isLoading={isLoading}
                 isFullscreen={isFullscreen}
@@ -85,6 +89,9 @@ export function NoteForm({
                 onClose={onCancel}
                 onSubmit={handleSubmit}
                 submitLabel={activeSubmitLabel}
+                folders={folders}
+                folderId={field.state.value}
+                onFolderChange={(id) => field.handleChange(id)}
               />
             )}
           />

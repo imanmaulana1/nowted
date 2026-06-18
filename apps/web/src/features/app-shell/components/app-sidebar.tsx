@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Plus } from 'lucide-react'
 
+import { FavoriteList } from '@/features/notes/components/favorite-list'
 import { Logo } from '@/shared/components/logo'
 import { ThemeToggle } from '@/shared/components/theme-toggle'
 import {
@@ -15,7 +16,7 @@ import {
   useSidebar,
 } from '@/shared/components/ui/sidebar'
 
-import { FavoriteList } from '@/features/notes/components/favorite-list'
+import { FolderSection } from '@/features/folders/components/folder-section'
 import { mainNav } from '../constants/main-nav'
 import { UserMenu } from './user-menu'
 
@@ -70,7 +71,9 @@ export function AppSidebar() {
         <FavoriteList />
       </SidebarHeader>
       <SidebarSeparator className='mx-auto' />
-      <SidebarContent></SidebarContent>
+      <SidebarContent>
+        <FolderSection />
+      </SidebarContent>
       <SidebarSeparator className='mx-auto' />
       <SidebarFooter>
         <UserMenu />
