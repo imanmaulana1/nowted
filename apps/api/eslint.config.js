@@ -8,9 +8,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default tseslint.config(
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
+    ...config,
+    files: ['**/*.ts'],
+  })),
   {
-    files: ['src/**/*.ts'],
+    files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
         project: './tsconfig.eslint.json',
@@ -38,6 +41,16 @@ export default tseslint.config(
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'prefer-const': 'error',
       'no-var': 'error',
+    },
+  },
+  {
+    files: ['tests/**/*.ts', 'src/**/*.test.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     },
   },
   {
