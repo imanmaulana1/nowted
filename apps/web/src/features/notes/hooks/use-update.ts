@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
+import { foldersQueryKeys } from '@/features/folders/lib/query-keys'
+
 import { updateNoteApi } from '../api/update-note.api'
 import { notesQueryKeys } from '../lib/query-keys'
 import type { NoteInput } from '../schemas/note-input.schema'
@@ -22,6 +24,10 @@ export const useUpdate = (slug: string) => {
 
       queryClient.invalidateQueries({
         queryKey: notesQueryKeys.lists(),
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: foldersQueryKeys.all,
       })
 
       toast.success('Note Saved', {

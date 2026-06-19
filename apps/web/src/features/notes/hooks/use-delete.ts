@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { authQueryKeys } from '@/features/auth/lib/query-keys'
+import { foldersQueryKeys } from '@/features/folders/lib/query-keys'
 
 import { deleteNote } from '../api/delete-note.api'
 import { notesQueryKeys } from '../lib/query-keys'
@@ -22,6 +23,10 @@ export const useDelete = () => {
 
       queryClient.invalidateQueries({
         queryKey: authQueryKeys.me(),
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: foldersQueryKeys.all,
       })
 
       toast.success('Note Deleted', {
