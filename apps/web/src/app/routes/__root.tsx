@@ -5,12 +5,15 @@ import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
+import { NotFoundPage } from '@/shared/components/not-found'
+
 type RouterContext = {
   queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootLayout,
+  notFoundComponent: NotFoundPage,
 })
 
 function RootLayout() {

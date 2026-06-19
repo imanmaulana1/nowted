@@ -1,10 +1,12 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 import { AppSidebar } from '@/features/app-shell/components/app-sidebar'
+import { NotFoundPage } from '@/shared/components/not-found'
 import { SidebarProvider } from '@/shared/components/ui/sidebar'
 
 export const Route = createFileRoute('/_protected/app')({
   component: AuthenticatedLayout,
+  notFoundComponent: NotFoundPage,
 })
 
 function AuthenticatedLayout() {
