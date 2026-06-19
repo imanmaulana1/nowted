@@ -14,7 +14,6 @@ export function parseApiError(error: unknown): ParsedApiError {
   let details: Record<string, string[]> | undefined
 
   if (axios.isAxiosError(error)) {
-    // 401 errors are rejected as raw AxiosError
     const apiData = error.response?.data as ErrorResponse | undefined
     if (apiData?.error) {
       code = apiData.error.code || code
@@ -27,16 +26,15 @@ export function parseApiError(error: unknown): ParsedApiError {
     } else if (error.message) {
       message = error.message
     }
+  } else if (error instanceof Error) {
+    message = error.message
   } else if (error && typeof error === 'object') {
-    // Errors unwrapped by the response interceptor (like 400, 500, etc.)
     if ('error' in error && error.error && typeof error.error === 'object') {
       const apiError = error as ErrorResponse
       code = apiError.error.code || code
       message = apiError.error.message || message
       details = apiError.error.details
     }
-  } else if (error instanceof Error) {
-    message = error.message
   }
 
   return { code, message, details }
