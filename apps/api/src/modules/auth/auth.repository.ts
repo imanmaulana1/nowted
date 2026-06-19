@@ -45,7 +45,7 @@ export const findAuthUserByEmail = (email: string) => {
       email: true,
       password: true,
       avatarUrl: true,
-      createdAt: true,
+      updatedAt: true,
       _count: {
         select: {
           folders: true,
