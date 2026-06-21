@@ -1,14 +1,13 @@
 import { apiReference } from '@scalar/express-api-reference';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
 import { getEnv } from '#/config/env.js';
 import { generateOpenApiDocument } from '#/config/openapi-doc.js';
-import { errorHandler, notFoundHandler } from '#/shared/middlewares/index.js';
+import { corsHandler, errorHandler, notFoundHandler } from '#/shared/middlewares/index.js';
 import { rootRouter, v1Router } from '#/shared/routes/index.js';
 
 export function createApp() {
@@ -30,12 +29,7 @@ export function createApp() {
   );
 
   app.use(helmet());
-  app.use(
-    cors({
-      origin: [getEnv.CORS_ORIGIN, 'http://localhost:4173'],
-      credentials: true,
-    })
-  );
+  app.use(corsHandler);
   app.use(cookieParser());
   app.use(express.json({ limit: '10kb' }));
   app.use(express.urlencoded({ extended: true, limit: '10kb' }));
