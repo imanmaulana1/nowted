@@ -13,7 +13,7 @@ A premium, full-featured note-taking frontend built with React 19, TypeScript, V
 
 **Project Resources**
 
-- 🚀 **[Live Demo]()**
+- 🚀 **[Live Demo](https://nowted.pages.dev/)**
 - 📄 **[API Docs]()**
 
 **Monorepo Packages**

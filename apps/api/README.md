@@ -14,7 +14,7 @@ A secure, high-performance RESTful API powering the Nowted note-taking workspace
 
 **Project Resources**
 
-- 🚀 **[Live Demo]()**
+- 🚀 **[Live Demo](https://nowted.pages.dev/)**
 - 📄 **[API Docs]()**
 
 **Monorepo Packages**

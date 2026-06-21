@@ -16,7 +16,7 @@ A beautiful, cloud-synced note-taking workspace built as a modern, type-safe Typ
 
 **Project Resources**
 
-- 🚀 **[Live Demo]()**
+- 🚀 **[Live Demo](https://nowted.pages.dev/)**
 - 📄 **[API Docs]()**
 
 **Monorepo Packages**
