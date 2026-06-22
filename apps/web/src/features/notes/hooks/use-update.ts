@@ -17,9 +17,7 @@ export const useUpdate = (slug: string) => {
       queryClient.setQueryData<Note>(notesQueryKeys.detail(data.slug), data)
 
       if (data.slug !== slug) {
-        queryClient.removeQueries({
-          queryKey: notesQueryKeys.detail(slug),
-        })
+        // Biarkan query lama terhapus secara alami (garbage collected) setelah unmount untuk menghindari refetching
       }
 
       queryClient.invalidateQueries({

@@ -12,11 +12,7 @@ export const useDelete = () => {
 
   return useMutation({
     mutationFn: deleteNote,
-    onSuccess: (_data, noteSlug) => {
-      queryClient.removeQueries({
-        queryKey: notesQueryKeys.detail(noteSlug),
-      })
-
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: notesQueryKeys.lists(),
       })
